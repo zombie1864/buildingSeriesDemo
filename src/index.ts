@@ -1,10 +1,10 @@
-const dummyData = require("../data/dummyData.json")
+// const dummyData = require("../data/dummyData.json")
 
-for (const entry in dummyData) {
-    console.log(entry);
-}
+// for (const entry in dummyData) {
+//     console.log(entry);
+// }
 
-const numbers = [1, 2, 3]
+const numbers = ["one", "two", "three"]
 
 for (const num of numbers) {
     console.log(num);
