@@ -1,9 +1,6 @@
 const http = require('http') // npm i --save-dev @types/node, node has built-in lib called http, this is listening for the req 
 const nycEnergyData = require('../data/data.json') // imports data.json
 const test = require('../src/index.js') // this loads the js file to here 
-// const fs = require('fs')
-// const js = "src/index.js"
-// const jsFile = fs.readFileSync(js)
 
 const server = http.createServer( (req: Request, res: Response) => { // this creates the server, req obj is when an HTTP req is made from the frontend, res is also an obj 
 
