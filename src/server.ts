@@ -1,9 +1,7 @@
-const http = require('http') // npm i --save-dev @types/node, node has built-in lib called http, this is listening for the req 
-const nycEnergyData = require('../data/data.json') // imports data.json
+import http from 'http'
 const test = require('../src/index.js') // this loads the js file to here 
 
-
-const server = http.createServer( (req: Request, res: Response) => { // this creates the server, req obj is when an HTTP req is made from the frontend, res is also an obj 
+const server = http.createServer( (req, res) => { 
 
     if (req.url === '/api/test' && req.method === 'GET') { // sets the res being sent to a specific url and if the HTTP verb is 'GET'
         // res.setHeader('Content-type', 'application/json') // json is the formate that is being sent back 
