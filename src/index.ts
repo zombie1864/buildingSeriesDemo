@@ -1,6 +1,6 @@
 import data from './data/data.json' // export of JSON by configuring ts with "resolveJsonModule": true
 
-class Main {
+class Main { // this is the blueprint for the main obj, used to structure the obj 
     client: string; 
     // details: string; 
     // amount: number 
