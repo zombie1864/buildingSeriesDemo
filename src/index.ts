@@ -1,14 +1,20 @@
 import data from './data/data.json' // export of JSON by configuring ts with "resolveJsonModule": true
 
 class Main { // this is the blueprint for the main obj, used to structure the obj 
-    client: string; 
-    // details: string; 
-    // amount: number 
+    bdbid: number; 
+    building_name: string; 
+    address: string; 
+    year_built: string; 
+    total_bldg_gross_sq_ft: number; 
+    parent_record_id: any; // this is found to be null but look into it later 
+    oper_agency_acronym: string; 
+    epapm_primary_function: string;
+    outofservice: boolean; 
+    latitude: number; 
+    longitude: number; 
 
     constructor() {
-        this.client = '<html><body><h1>hello world</h1></body></html> '
-        // this.details = d; 
-        // this.amount = a; 
+
     }
     
     format() {
