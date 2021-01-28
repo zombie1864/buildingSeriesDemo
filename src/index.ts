@@ -14,6 +14,9 @@ class Main {
     format() {
         return data.count.toString()
     }
+    results() {
+        return JSON.stringify(data)
+    }
 
     render() {
         // console.log('hello');

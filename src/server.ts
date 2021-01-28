@@ -11,6 +11,7 @@ const server = http.createServer( (req: any, res: any) => {
         const main = new Main() // inst of class obj 
         res.write(main.client)
         res.write(main.format())
+        res.write(main.results())
         res.end()
     } else {
         res.setHeader('Access-Control-Allow-Origin', '*') // this is to help avoid CORS issues 
