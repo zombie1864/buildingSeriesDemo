@@ -1,12 +1,27 @@
-// const dummyData = require("../data/dummyData.json")
+class Main {
+    client: string; 
+    details: string; 
+    amount: number 
 
-// for (const entry in dummyData) {
-//     console.log(entry);
-// }
-
-const numbers = ["one", "two", "three"]
-
-for (const num of numbers) {
-    console.log(num);
+    constructor(c: string, d: string, a: number) {
+        this.client = c; 
+        this.details = d; 
+        this.amount = a; 
+    }
     
+    format() {
+        return `${this.client} owes $${this.amount} for ${this.details}`
+    }
+
+    // render() {
+    //     console.log('hello');
+    //     let t = document.createTextNode("jeff");
+    //     return t
+    // }
 }
+
+// const invOne = new Main('j', 'working', 200)
+// console.log(invOne);
+
+
+export default Main
