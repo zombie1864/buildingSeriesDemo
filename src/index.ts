@@ -1,27 +1,24 @@
 class Main {
     client: string; 
-    details: string; 
-    amount: number 
+    // details: string; 
+    // amount: number 
 
-    constructor(c: string, d: string, a: number) {
-        this.client = c; 
-        this.details = d; 
-        this.amount = a; 
+    constructor() {
+        this.client = '<html><body><h1>hello world</h1></body></html> '
+        // this.details = d; 
+        // this.amount = a; 
     }
     
-    format() {
-        return `${this.client} owes $${this.amount} for ${this.details}`
-    }
-
-    // render() {
-    //     console.log('hello');
-    //     let t = document.createTextNode("jeff");
-    //     return t
+    // format() {
+    //     return `${this.client} owes $${this.amount} for ${this.details}`
     // }
+
+    render() {
+        // console.log('hello');
+        // let t = .createElement('h1')
+        // t.innerText = 'test'
+        // return t
+    }
 }
-
-// const invOne = new Main('j', 'working', 200)
-// console.log(invOne);
-
 
 export default Main
