@@ -1,3 +1,5 @@
+import data from './data/data.json' // export of JSON by configuring ts with "resolveJsonModule": true
+
 class Main {
     client: string; 
     // details: string; 
@@ -9,9 +11,12 @@ class Main {
         // this.amount = a; 
     }
     
-    // format() {
-    //     return `${this.client} owes $${this.amount} for ${this.details}`
-    // }
+    format() {
+        return data.count.toString()
+    }
+    results() {
+        return JSON.stringify(data)
+    }
 
     render() {
         // console.log('hello');

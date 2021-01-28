@@ -10,6 +10,8 @@ const server = http.createServer( (req: any, res: any) => {
         res.writeHead(200, {'Content-type': 'text/html'}) // HTTP status code 200, ok && html is the formate that is being sent back 
         const main = new Main() // inst of class obj 
         res.write(main.client)
+        res.write(main.format())
+        res.write(main.results())
         res.end()
     } else {
         res.setHeader('Access-Control-Allow-Origin', '*') // this is to help avoid CORS issues 
