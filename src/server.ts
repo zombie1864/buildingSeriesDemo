@@ -1,5 +1,4 @@
 const http = require('http')
-
 import Main from './index'
 
 const server = http.createServer( (req: any, res: any) => { 
@@ -14,7 +13,6 @@ const server = http.createServer( (req: any, res: any) => {
     } else {
         res.setHeader('Access-Control-Allow-Origin', '*') // this is to help avoid CORS issues 
         res.writeHead(404, {'Content-type': 'application/json'}) // json is the formate that is being sent back 
-
         res.end(JSON.stringify({errMsg: 'Invalid Url Route'}))
     }
 }); // end of server 
