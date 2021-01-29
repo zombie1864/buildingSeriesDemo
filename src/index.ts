@@ -37,23 +37,6 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
         }) // end of iterates thr [{},...,{}]
         return result
     } // end of func
-
-    // addTd = ():string => { 
-    //     let result = this.addColName()
-    //     const arrOfDataObj = data.results // ds is [{},...,{}]
-    //     arrOfDataObj.forEach( dataObj => {
-    //         let dataObjValues = Object.values(dataObj) // ds is [val1,...,val2]
-    //         dataObjValues.forEach( value => {
-    //             result += `<td>${value}</td>`.toString()
-    //         })
-    //     })
-
-    //     return result
-    // }
-
-    renderWorld() {
-        // return (this.table + '<h1>World</h1>').toString()
-    }
 }
 
 export default Main
