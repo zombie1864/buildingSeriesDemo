@@ -15,6 +15,7 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
         const arrOfColName = Object.keys(data.results[0]) // ds is [key1,...,key2]
         const arrOfDataObj = data.results // is is [{},...,{}]
         arrOfColName.forEach( colName => { // iterates thr [key1,...,key2]
+            if (colName === "energy_breakdown" || colName === "co2eui_breakdown") return 
             result += `<th>${colName}`.toString() // concats th to table tag 
         })
         result += '<tr></tr>'
@@ -51,7 +52,7 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
     // }
 
     renderWorld() {
-        return (this.table + '<h1>World</h1>').toString()
+        // return (this.table + '<h1>World</h1>').toString()
     }
 }
 
