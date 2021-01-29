@@ -1,36 +1,54 @@
 import data from './data/data.json' // export of JSON by configuring ts with "resolveJsonModule": true
 
 class Main { // this is the blueprint for the main obj, used to structure the obj 
-    table: string
+    tableTag: string
     dataObj: any
-
+    
     constructor() { // no params - reason: inst of main will simply produce a table 
-        this.table = `<table>`
+        this.tableTag = `<table>`
         this.dataObj = data
     }
     
-    addColName = () => { // appends th to table tag 
-        let result: string = this.table; // gives the table tag 
+    tableComp = ():string => { // appends th to table tag 
+        // type validPair = number | string | null | boolean
+        let result: string = this.tableTag; // gives the table tag 
         const arrOfColName = Object.keys(data.results[0]) // ds is [key1,...,key2]
-        arrOfColName.forEach( colName => {
+        const arrOfDataObj = data.results // is is [{},...,{}]
+        arrOfColName.forEach( colName => { // iterates thr [key1,...,key2]
             result += `<th>${colName}`.toString() // concats th to table tag 
         })
-        // this.addTd(result)
+        result += '<tr></tr>'
+        arrOfDataObj.forEach( dataObj => { //iterates thr [{},...,{}]
+            let dataObjValues = Object.values(dataObj) // ds is [val1,...,val2]
+            dataObjValues.forEach( (value) => {
+                if ( 
+                    typeof value === 'number' || 
+                    typeof value === 'string' ||
+                    typeof value === 'boolean'
+                ) {
+                    result += `<td>${value}</td>`.toString()
+                } else if ( value === null ) {
+                    result += '<td>null</td>'
+                } else {
+                    result += '<tr></tr>'
+                }
+            })
+        }) // end of iterates thr [{},...,{}]
         return result
     } // end of func
 
-    addTd = () => { // the idea is here 
-        let result = this.addColName()
-        const arrOfDataObj = data.results // ds is [{},...,{}]
-        arrOfDataObj.forEach( dataObj => {
-            let dataObjValues = Object.values(dataObj) // ds is [val1,...,val2]
-            dataObjValues.forEach( value => {
-                result += `<td>${value}</td>`.toString()
-            })
-        })
+    // addTd = ():string => { 
+    //     let result = this.addColName()
+    //     const arrOfDataObj = data.results // ds is [{},...,{}]
+    //     arrOfDataObj.forEach( dataObj => {
+    //         let dataObjValues = Object.values(dataObj) // ds is [val1,...,val2]
+    //         dataObjValues.forEach( value => {
+    //             result += `<td>${value}</td>`.toString()
+    //         })
+    //     })
 
-        return result
-    }
+    //     return result
+    // }
 
     renderWorld() {
         return (this.table + '<h1>World</h1>').toString()
