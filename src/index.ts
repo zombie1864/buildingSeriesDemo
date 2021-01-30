@@ -1,12 +1,16 @@
 import data from './data/data.json' // export of JSON by configuring ts with "resolveJsonModule": true
 
 class Main { // this is the blueprint for the main obj, used to structure the obj 
+    style: string 
     tableTag: string
     dataObj: any
+    mapContainer: string
     
     constructor() { // no params - reason: inst of main will simply produce a table 
+        this.style = '<style>'
         this.tableTag = `<table style="border: 1px solid black; border-collapse: collapse">`
         this.dataObj = data
+        this.mapContainer = '<div style="float:left;overflow:hidden">'
     }
     
     tableComp = ():string => { // appends th to table tag 
@@ -34,8 +38,17 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
                 }
             })
         }) // end of iterates thr [{},...,{}]
-        return result
+        return result + '</table>'
     } // end of func
+
+    mapComp = ():string => {
+        let result: string = this.mapContainer
+        return result += "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electrtypesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It " + '</div>'
+    }
+
+    cssStyle = (): string => {
+        return '</style>'
+    }
 }
 
 export default Main
