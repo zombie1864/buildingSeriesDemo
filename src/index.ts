@@ -42,8 +42,9 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
     } // end of func
 
     mapComp = ():string => {
-        let result: string = this.mapContainer
-        return result += "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electrtypesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It " + '</div>'
+        let result: string = this.mapContainer // gives the div 
+
+        return result += '</div>'
     }
 
     cssStyle = (): string => {
