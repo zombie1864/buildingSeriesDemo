@@ -1,30 +1,16 @@
 import data from './data/data.json' // export of JSON by configuring ts with "resolveJsonModule": true
 
 class Main { // this is the blueprint for the main obj, used to structure the obj 
-    googleMapsApi: string 
-    // gmapsJsLib: string 
-    gmapsStyleTag: string 
-    gmapsDemo: string 
     style: string 
     tableTag: string
     dataObj: any
     mapContainer: string
     
     constructor() { // no params - reason: inst of main will simply produce a table 
-        this.googleMapsApi = '<script src="http://maps.google.com/maps/api/js?sensor=true"></script>'
-        // this.gmapsJsLib = '<script src="gmaps.core.js"></script>'
-        this.gmapsStyleTag = '<style type="text/css">    #map {\
-            width: 400px;\
-            height: 400px;\
-          }\
-        </style>'
-        this.gmapsDemo = '  <div id="map"></div><script>\
-         var map = new GMaps({ el : "#map", lat: -12.0433, lng: -77.0283, zoom: 12 });\
-         </script>'
         this.style = '<style>'
         this.tableTag = `<table style="border: 1px solid black; border-collapse: collapse">`
         this.dataObj = data
-        this.mapContainer = '<div style="float:left;overflow:hidden">'
+        this.mapContainer = '<div style="float:left;overflow:hidden"id="map"></div>'
     }
 
     tableComp = ():string => { // appends th to table tag 
@@ -55,14 +41,32 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
         return result + '</table>'
     } // end of func
 
-    mapComp = ():string => {
-        let result: string = this.mapContainer // gives the div 
+    mapComp = ():string => { // REMOVE THIS LATER 
+        let divContainer: string = this.mapContainer // gives the div 
+            // functionScript: string 
 
-        return result += '</div>'
+        return (divContainer )
     }
 
     cssStyle = (): string => {
         return '</style>'
+    }
+
+    initMap = () => {
+        return '<body>\
+        <script>\
+        function initMap(){\
+            let options = {\
+                zoom: 18, \
+                center: {\
+                    lat:40.71846,\
+                    lng: -73.99391\
+                }\
+            };\
+            let map = new google.maps.Map(document.getElementById("map"), options);\
+        }\
+        </script>\
+        </body>'
     }
 }
 
