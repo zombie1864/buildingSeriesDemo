@@ -52,22 +52,33 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
         return '</style>'
     }
 
-    initMap = () => {
-        return '<body>\
-        <script>\
-        function initMap(){\
+    initMap = (): string => { // creates map 
+        let result = '<body><script>', 
+            addMarker = 'function addMarker(props){\
+                let marker = new google.maps.Marker({\
+                    position: props.coords,\
+                    map: map\
+                });\
+            }'
+
+        result += 'function initMap(){\
             let options = {\
-                zoom: 18, \
-                center: {\
-                    lat:40.71846,\
-                    lng: -73.99391\
-                }\
+                zoom: 14, \
+                center: { lat:40.71846, lng: -73.99391 }\
             };\
             let map = new google.maps.Map(document.getElementById("map"), options);\
-        }\
-        </script>\
-        </body>'
-    }
+        '
+        result += addMarker 
+
+        const arrOfDataObj = data.results // ds is [{},...,{}]
+        arrOfDataObj.forEach( obj => { // graps each {}
+            let latVal = obj.latitude // graps the values of lat 
+            let lngVal = obj.longitude // graps the values of lng 
+            result += `addMarker({ coords: { lat:${latVal}, lng:${lngVal} } });`
+        })
+        result += '};</script></body>'
+        return result
+    } // end of func 
 }
 
 export default Main
