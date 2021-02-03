@@ -28,7 +28,10 @@
     "dependencies_added": "nodemon, typescript",
     "description_nodemon": "nodemon was added to monitor the server so to automate refresh when changes are made to the server",
     "description_typescript": "even though ts is installed globally -- it is good to install it locally as a devDep",
-    "description_ts-node": "allows node to run ts files without first compiling it to vanilla js", 
+    "description_ts-node": "allows node to run ts files without first compiling it to vanilla js",
     "description_@types/node": "gives types to nodejs env"
+  },
+  "dependencies": {
+    "gmaps.core": "^0.5.1"
   }
 }
