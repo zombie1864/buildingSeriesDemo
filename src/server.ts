@@ -18,7 +18,7 @@ const server = http.createServer( (req: any, res: any) => {
                 res.write(data);
             }
             res.write(
-                `${main.initMap()}`+`${main.cssStyle()}` + `${main.mapContainer}` + `<div id="table">${main.tableComp()}</div>`
+                `${main.html}` + `${main.cssStyle()}` + `${main.initMap()}` + `${main.mapContainer}` + `<div id="table">${main.tableComp()}</div>`
                 )
             res.end()
         })

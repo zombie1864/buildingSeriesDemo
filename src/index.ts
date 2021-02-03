@@ -1,13 +1,15 @@
 import data from './data/data.json' // export of JSON by configuring ts with "resolveJsonModule": true
 
 class Main { // this is the blueprint for the main obj, used to structure the obj 
+    html: string 
     style: string 
     tableTag: string
     dataObj: any
     mapContainer: string
     
     constructor() { // no params - reason: inst of main will simply produce a table 
-        this.style = '<style>'
+        this.html = '<head><script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACIaoXM5khxJYc827L7Eq74OtnmPffMA0&callback=initMap"></script><title>Test</title>'
+        this.style = '<style type="text/css">'
         this.tableTag = `<table style="border: 1px solid black; border-collapse: collapse">`
         this.dataObj = data
         this.mapContainer = '<div style="float:left;overflow:hidden"id="map"></div>'
@@ -42,17 +44,18 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
     } // end of func
 
     cssStyle = (): string => { // work on the css
+        let start = this.html
         let result = this.style
+        start += result
         result += '\
             #map {\
-            }\
-            #table {\
-                position: relative;\
-                width: 50%;\
+                width: 400px;\
+                height: 400px;\
             }\
         </style>'
 
-        return '</style>'
+        // return '</style>'
+        return result + '</head>'
     }
 
     initMap = (): string => { // creates map 
