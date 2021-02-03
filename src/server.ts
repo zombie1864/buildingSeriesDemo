@@ -1,10 +1,7 @@
 const http = require('http')
-import * as fs from 'fs'
-import * as path from 'path'
 import Main from './index'
 
 const server = http.createServer( (req: any, res: any) => { 
-    
     if (req.url === '/api/' && req.method === 'GET') { // sets the res being sent to a specific url and if the HTTP verb is 'GET'
         res.setHeader('Access-Control-Allow-Origin', '*') // this is to help avoid CORS issues 
         res.writeHead(200, {'Content-Type': 'text/html'}) // HTTP status code 200, ok && html is the formate that is being sent back 

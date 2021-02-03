@@ -71,7 +71,7 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
         return result
     } // end of func 
 
-    mapCssStyle = (): string => { // work on the css
+    mapCssStyle = (): string => { 
         let start = this.html
         let result = this.style
         start += result
@@ -83,7 +83,9 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
         </style>'
         return result + '</head>'
     }
-
+/*****************************************************************************/
+// ----------------------------[ CSS ]----------------------------
+/*****************************************************************************/
     tableCssStyle = ():string => {
         return '\
         <style>\
