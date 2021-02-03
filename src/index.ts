@@ -8,7 +8,7 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
     mapContainer: string
     
     constructor() { // no params - reason: inst of main will simply produce a table 
-        this.html = '<head><script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACIaoXM5khxJYc827L7Eq74OtnmPffMA0&callback=initMap"></script><title>Test</title>'
+        this.html = '<head><script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACIaoXM5khxJYc827L7Eq74OtnmPffMA0&callback=initMap"></script><title>@zxc</title>'
         this.style = '<style type="text/css">'
         this.tableTag = `<table style="border: 1px solid black; border-collapse: collapse">`
         this.dataObj = data
@@ -43,21 +43,6 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
         return result + '</table>'
     } // end of func
 
-    cssStyle = (): string => { // work on the css
-        let start = this.html
-        let result = this.style
-        start += result
-        result += '\
-            #map {\
-                width: 400px;\
-                height: 400px;\
-            }\
-        </style>'
-
-        // return '</style>'
-        return result + '</head>'
-    }
-
     initMap = (): string => { // creates map 
         let result = '<body><script>', 
             addMarker = 'function addMarker(props){\
@@ -69,7 +54,7 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
 
         result += 'function initMap(){\
             let options = {\
-                zoom: 14, \
+                zoom: 10, \
                 center: { lat:40.71846, lng: -73.99391 }\
             };\
             let map = new google.maps.Map(document.getElementById("map"), options);\
@@ -85,6 +70,31 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
         result += '};</script></body>'
         return result
     } // end of func 
+
+    mapCssStyle = (): string => { // work on the css
+        let start = this.html
+        let result = this.style
+        start += result
+        result += '\
+            #map {\
+                width: 50%;\
+                height: 800px;\
+            }\
+        </style>'
+        return result + '</head>'
+    }
+
+    tableCssStyle = ():string => {
+        return '\
+        <style>\
+            #table {\
+                float: left;\
+                width: 50%;\
+                height: 800px;\
+                overflow-y: scroll;\
+            }\
+        </style>'
+    }
 }
 
 export default Main
