@@ -50,6 +50,15 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
                     position: props.coords,\
                     map: map\
                 });\
+                if (props.content) {\
+                    let infoWindow = new google.maps.InfoWindow({ content: props.content });\
+                    marker.addListener("mouseover", () => {\
+                        infoWindow.open(map, marker);\
+                    });\
+                    marker.addListener("mouseout", () => {\
+                        infoWindow.close();\
+                    });\
+                }\
             }'
 
         result += 'function initMap(){\
@@ -63,10 +72,15 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
 
         const arrOfDataObj = data.results // ds is [{},...,{}]
         arrOfDataObj.forEach( obj => { // graps each {}
-            let latVal = obj.latitude // graps the values of lat 
-            let lngVal = obj.longitude // graps the values of lng 
+            let latVal = obj.latitude, // graps the values of lat 
+                lngVal = obj.longitude, // graps the values of lng 
+                bldName = obj.building_name, //graps the name of bld
+                bldId = obj.bdbid
             if ( latVal === null || lngVal === null ) return 
-            result += `addMarker({ coords: { lat:${latVal}, lng:${lngVal} } });`
+            result += `addMarker({\
+                coords: { lat:${latVal}, lng:${lngVal} },\
+                content: "<h1>${bldName}-id:${bldId}</h1>"\
+            });`
         })
         result += '};</script></body>'
         return result
