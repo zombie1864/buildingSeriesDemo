@@ -41,14 +41,17 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
         return result + '</table>'
     } // end of func
 
-    mapComp = ():string => { // REMOVE THIS LATER 
-        let divContainer: string = this.mapContainer // gives the div 
-            // functionScript: string 
+    cssStyle = (): string => { // work on the css
+        let result = this.style
+        result += '\
+            #map {\
+            }\
+            #table {\
+                position: relative;\
+                width: 50%;\
+            }\
+        </style>'
 
-        return (divContainer )
-    }
-
-    cssStyle = (): string => {
         return '</style>'
     }
 
