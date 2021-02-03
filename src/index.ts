@@ -17,7 +17,7 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
 
     tableComp = ():string => { // appends th to table tag 
         let result: string = this.tableTag; // gives the table tag 
-        const arrOfColName = Object.keys(data.results[0]) // ds is [key1,...,key2]
+        const arrOfColName:string[] = Object.keys(data.results[0]) // ds is [key1,...,key2]
         const arrOfDataObj = data.results // is is [{},...,{}]
         arrOfColName.forEach( colName => { // iterates thr [key1,...,key2]
             if (colName === "energy_breakdown" || colName === "co2eui_breakdown") return 
@@ -44,8 +44,8 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
     } // end of func
 
     initMap = (): string => { // creates map 
-        let result = '<body><script>', 
-            addMarker = 'function addMarker(props){\
+        let result:string = '<body><script>', 
+            addMarker:string = 'function addMarker(props){\
                 let marker = new google.maps.Marker({\
                     position: props.coords,\
                     map: map\
@@ -72,21 +72,22 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
         return result
     } // end of func 
 
-    mapCssStyle = (): string => { 
-        let start = this.html
-        let result = this.style
-        start += result
-        result += '\
-            #map {\
-                width: 50%;\
-                height: 800px;\
-            }\
-        </style>'
-        return result + '</head>'
-    }
 /*****************************************************************************/
 // ----------------------------[ CSS ]----------------------------
 /*****************************************************************************/
+mapCssStyle = (): string => { 
+    let start:string = this.html
+    let result:string = this.style
+    start += result
+    result += '\
+        #map {\
+            width: 50%;\
+            height: 800px;\
+        }\
+    </style>'
+    return result + '</head>'
+}
+
     tableCssStyle = ():string => {
         return '\
         <style>\
