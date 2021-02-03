@@ -65,6 +65,7 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
         arrOfDataObj.forEach( obj => { // graps each {}
             let latVal = obj.latitude // graps the values of lat 
             let lngVal = obj.longitude // graps the values of lng 
+            if ( latVal === null || lngVal === null ) return 
             result += `addMarker({ coords: { lat:${latVal}, lng:${lngVal} } });`
         })
         result += '};</script></body>'
