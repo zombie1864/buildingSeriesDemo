@@ -7,9 +7,7 @@ const server = http.createServer( (req: any, res: any) => {
         res.setHeader('Access-Control-Allow-Origin', '*') // this is to help avoid CORS issues 
         res.writeHead(200, {'Content-Type': 'text/html'}) // HTTP status code 200, ok && html is the formate that is being sent back 
         const main = new Main(data) // inst of class obj 
-        res.write(
-            `${main.tableCssStyle()}`
-            ) // ⮑ RENAME FUNC
+        res.write( `${main._getMainResult()}` )
         res.end()
     } else {
         res.setHeader('Access-Control-Allow-Origin', '*') // this is to help avoid CORS issues 
@@ -24,4 +22,4 @@ server.listen(PORT, () => {
     console.log('listening on port 8000'); // this cb is an opt param 
 })
 
-// CHECK POINT - 3
+// CHECK POINT - 4

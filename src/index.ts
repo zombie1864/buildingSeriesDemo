@@ -1,4 +1,4 @@
-// CHECK POINT - 3
+// CHECK POINT - 4
 class Main  { // this is the blueprint for the main obj, used to structure the obj 
     private html: string 
     private style: string 
@@ -92,7 +92,7 @@ class Main  { // this is the blueprint for the main obj, used to structure the o
         return this.mainResult
     } // end of func
 
-    tableCssStyle = ():string => {
+    private tableCssStyle = ():string => {
         this.mainResult += this.tableComp() + '\
         <style>\
             #table {\
@@ -104,6 +104,10 @@ class Main  { // this is the blueprint for the main obj, used to structure the o
         </style>'
         
         return this.mainResult
+    }
+
+    _getMainResult(): string {
+        return this.tableCssStyle()
     }
 }
 
