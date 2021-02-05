@@ -13,16 +13,13 @@ class Main  { // this is the blueprint for the main obj, used to structure the o
 
     tableComp = ():string => { // appends th to table tag 
         let result: string = this.tableTag; // gives the table tag 
-        const arrOfColName:string[] = Object.keys(this.data.results[0]) // ds is [key1,...,key2]
-        const arrOfDataObj:any = this.data.results // is is [{},...,{}]
-        arrOfColName.forEach( colName => { // iterates thr [key1,...,key2]
+        Object.keys(this.data.results[0]).forEach( colName => { // iterates thr [key1,...,key2]
             if (colName === "energy_breakdown" || colName === "co2eui_breakdown") return 
             result += `<th style="border: 1px solid black; border-collapse: collapse">${colName}`.toString() // concats th to table tag 
         })
         result += '<tr></tr>'
-        arrOfDataObj.forEach( function(dataObj:any) { //iterates thr [{},...,{}]
-            let dataObjValues = Object.values(dataObj) // ds is [val1,...,val2]
-            dataObjValues.forEach( (value) => {
+        this.data.results.forEach( function(dataObj:any) { //iterates thr [{},...,{}]
+            Object.values(dataObj).forEach( (value) => {
                 if ( 
                     typeof value === 'number' || 
                     typeof value === 'string' ||
@@ -57,25 +54,21 @@ class Main  { // this is the blueprint for the main obj, used to structure the o
                 }\
             }'
 
-        result += 'function initMap(){\
+        result += `function initMap(){\
             let options = {\
                 zoom: 10, \
                 center: { lat:40.71846, lng: -73.99391 }\
             };\
             let map = new google.maps.Map(document.getElementById("map"), options);\
-        '
+        `
         result += addMarker 
 
         const arrOfDataObj = this.data.results // ds is [{},...,{}]
         arrOfDataObj.forEach( function(obj:any) { // graps each {}
-            let latVal = obj.latitude, // graps the values of lat 
-                lngVal = obj.longitude, // graps the values of lng 
-                bldName = obj.building_name, //graps the name of bld
-                bldId = obj.bdbid
-            if ( latVal === null || lngVal === null ) return 
+            if ( obj.latitude === null || obj.longitude === null ) return 
             result += `addMarker({\
-                coords: { lat:${latVal}, lng:${lngVal} },\
-                content: "<h1>${bldName}-id:${bldId}</h1>"\
+                coords: { lat:${obj.latitude}, lng:${obj.longitude} },\
+                content: "<h1>${obj.building_name}-id:${obj.bdbid}</h1>"\
             });`
         })
         result += '};</script></body>'
@@ -86,9 +79,7 @@ class Main  { // this is the blueprint for the main obj, used to structure the o
 // ----------------------------[ CSS ]----------------------------
 /*****************************************************************************/
 mapCssStyle = (): string => { 
-    let start:string = this.html
     let result:string = this.style
-    start += result
     result += '\
         #map {\
             width: 50%;\
