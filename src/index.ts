@@ -1,50 +1,38 @@
-import data from './data/data.json' // export of JSON by configuring ts with "resolveJsonModule": true
-
-class Main { // this is the blueprint for the main obj, used to structure the obj 
-    html: string 
-    style: string 
-    tableTag: string
-    dataObj: any
-    mapContainer: string
+interface MainRequirements {
+    MainResult: string 
+}
+class Main implements MainRequirements{ // this is the blueprint for the main obj, used to structure the obj 
+    private html: string 
+    private style: string 
+    private tableTag: string
+    private mapContainer: string
+    private mainResult: string
     
-    constructor() { // no params - reason: inst of main will simply produce a table 
+    constructor(private data: any) { // no params - reason: inst of main will simply produce a table 
         this.html = '<head><script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACIaoXM5khxJYc827L7Eq74OtnmPffMA0&callback=initMap"></script><title>@zxc</title>'
         this.style = '<style type="text/css">'
         this.tableTag = `<table style="border: 1px solid black; border-collapse: collapse">`
-        this.dataObj = data
         this.mapContainer = '<div style="float:left;overflow:hidden"id="map"></div>'
+        this.mainResult = ''
+    }
+    private mainHeadTag = (): string => { 
+        let htmlHead: string = this.html
+        htmlHead += this.style
+        htmlHead += '\
+            #map {\
+                width: 50%;\
+                height: 800px;\
+            }\
+        </style>'
+        this.mainResult += htmlHead + '</head>'
+        return this.mainResult
     }
 
-    tableComp = ():string => { // appends th to table tag 
-        let result: string = this.tableTag; // gives the table tag 
-        const arrOfColName:string[] = Object.keys(data.results[0]) // ds is [key1,...,key2]
-        const arrOfDataObj = data.results // is is [{},...,{}]
-        arrOfColName.forEach( colName => { // iterates thr [key1,...,key2]
-            if (colName === "energy_breakdown" || colName === "co2eui_breakdown") return 
-            result += `<th style="border: 1px solid black; border-collapse: collapse">${colName}`.toString() // concats th to table tag 
-        })
-        result += '<tr></tr>'
-        arrOfDataObj.forEach( dataObj => { //iterates thr [{},...,{}]
-            let dataObjValues = Object.values(dataObj) // ds is [val1,...,val2]
-            dataObjValues.forEach( (value) => {
-                if ( 
-                    typeof value === 'number' || 
-                    typeof value === 'string' ||
-                    typeof value === 'boolean'
-                ) {
-                    result += `<td style="border: 1px solid black; border-collapse: collapse">${value}</td>`.toString()
-                } else if ( value === null ) {
-                    result += '<td style="border: 1px solid black; border-collapse: collapse">null</td>'
-                } else {
-                    result += '<tr></tr>'
-                }
-            })
-        }) // end of iterates thr [{},...,{}]
-        return result + '</table>'
-    } // end of func
-
-    initMap = (): string => { // creates map 
-        let result:string = '<body><script>', 
+    private initMap = (): string => { // creates map 
+        let result:string = '', 
+            zoomLvl = 10,
+            centerLat = 40.71846, 
+            centerLng = -73.99391,
             addMarker:string = 'function addMarker(props){\
                 let marker = new google.maps.Marker({\
                     position: props.coords,\
@@ -60,50 +48,58 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
                     });\
                 }\
             }'
-
-        result += 'function initMap(){\
+        this.mainHeadTag() // this turns mainHeadTag 'on' -- exec the code inside it since it is private
+        result += '<script>' 
+        result += `function initMap(){\
             let options = {\
-                zoom: 10, \
-                center: { lat:40.71846, lng: -73.99391 }\
+                zoom: ${zoomLvl}, \
+                center: { lat:${centerLat}, lng: ${centerLng} }\
             };\
             let map = new google.maps.Map(document.getElementById("map"), options);\
-        '
+        `
         result += addMarker 
 
-        const arrOfDataObj = data.results // ds is [{},...,{}]
-        arrOfDataObj.forEach( obj => { // graps each {}
-            let latVal = obj.latitude, // graps the values of lat 
-                lngVal = obj.longitude, // graps the values of lng 
-                bldName = obj.building_name, //graps the name of bld
-                bldId = obj.bdbid
-            if ( latVal === null || lngVal === null ) return 
+        const arrOfDataObj = this.data.results // ds is [{},...,{}]
+        arrOfDataObj.forEach( function(obj:any) { // graps each {}
+            if ( obj.latitude === null || obj.longitude === null ) return 
             result += `addMarker({\
-                coords: { lat:${latVal}, lng:${lngVal} },\
-                content: "<h1>${bldName}-id:${bldId}</h1>"\
+                coords: { lat:${obj.latitude}, lng:${obj.longitude} },\
+                content: "<h1>${obj.building_name}-id:${obj.bdbid}</h1>"\
             });`
         })
-        result += '};</script></body>'
-        return result
+        result += '};</script>'
+        this.mainResult += result + this.mapContainer
+        return this.mainResult
     } // end of func 
 
-/*****************************************************************************/
-// ----------------------------[ CSS ]----------------------------
-/*****************************************************************************/
-mapCssStyle = (): string => { 
-    let start:string = this.html
-    let result:string = this.style
-    start += result
-    result += '\
-        #map {\
-            width: 50%;\
-            height: 800px;\
-        }\
-    </style>'
-    return result + '</head>'
-}
+    private tableComp = ():string => { // appends th to table tag 
+        let result: string = this.tableTag; // gives the table tag 
+        Object.keys(this.data.results[0]).forEach( colName => { // iterates thr [key1,...,key2]
+            if (colName === "energy_breakdown" || colName === "co2eui_breakdown") return 
+            result += `<th style="border: 1px solid black; border-collapse: collapse">${colName}`.toString() // concats th to table tag 
+        })
+        result += '<tr></tr>'
+        this.data.results.forEach( function(dataObj:any) { //iterates thr [{},...,{}]
+            Object.values(dataObj).forEach( (value) => {
+                if ( 
+                    typeof value === 'number' || 
+                    typeof value === 'string' ||
+                    typeof value === 'boolean'
+                ) {
+                    result += `<td style="border: 1px solid black; border-collapse: collapse">${value}</td>`.toString()
+                } else if ( value === null ) {
+                    result += '<td style="border: 1px solid black; border-collapse: collapse">null</td>'
+                } else {
+                    result += '<tr></tr>'
+                }
+            })
+        }) // end of iterates thr [{},...,{}]
+        this.mainResult += this.initMap() + '<div id="table">' + result + '</table>' + '</div>'
+        return this.mainResult
+    } // end of func
 
-    tableCssStyle = ():string => {
-        return '\
+    private tableCssStyle = ():string => {
+        this.mainResult += this.tableComp() + '\
         <style>\
             #table {\
                 float: left;\
@@ -112,6 +108,12 @@ mapCssStyle = (): string => {
                 overflow-y: scroll;\
             }\
         </style>'
+        
+        return this.mainResult
+    }
+
+    get MainResult(): string {
+        return this.tableCssStyle()
     }
 }
 
