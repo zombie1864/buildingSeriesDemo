@@ -1,5 +1,7 @@
-// CHECK POINT - 4
-class Main  { // this is the blueprint for the main obj, used to structure the obj 
+interface MainRequirements {
+    MainResult: string 
+}
+class Main implements MainRequirements{ // this is the blueprint for the main obj, used to structure the obj 
     private html: string 
     private style: string 
     private tableTag: string
