@@ -28,6 +28,9 @@ class Main  { // this is the blueprint for the main obj, used to structure the o
 
     private initMap = (): string => { // creates map 
         let result:string = '', 
+            zoomLvl = 10,
+            centerLat = 40.71846, 
+            centerLng = -73.99391,
             addMarker:string = 'function addMarker(props){\
                 let marker = new google.maps.Marker({\
                     position: props.coords,\
@@ -43,11 +46,12 @@ class Main  { // this is the blueprint for the main obj, used to structure the o
                     });\
                 }\
             }'
-        result += this.mainHeadTag() + '<body><script>'
+        this.mainHeadTag() // this turns mainHeadTag 'on' -- exec the code inside it since it is private
+        result += '<script>' 
         result += `function initMap(){\
             let options = {\
-                zoom: 10, \
-                center: { lat:40.71846, lng: -73.99391 }\
+                zoom: ${zoomLvl}, \
+                center: { lat:${centerLat}, lng: ${centerLng} }\
             };\
             let map = new google.maps.Map(document.getElementById("map"), options);\
         `
@@ -61,7 +65,7 @@ class Main  { // this is the blueprint for the main obj, used to structure the o
                 content: "<h1>${obj.building_name}-id:${obj.bdbid}</h1>"\
             });`
         })
-        result += '};</script></body>'
+        result += '};</script>'
         this.mainResult += result + this.mapContainer
         return this.mainResult
     } // end of func 
