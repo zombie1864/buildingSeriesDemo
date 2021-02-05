@@ -1,3 +1,4 @@
+// CHECK POINT
 class Main  { // this is the blueprint for the main obj, used to structure the obj 
     html: string 
     style: string 
