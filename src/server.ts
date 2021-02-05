@@ -21,5 +21,3 @@ const PORT = process.env.PORT || 8000 // the process.env prop is an obj which st
 server.listen(PORT, () => {
     console.log('listening on port 8000'); // this cb is an opt param 
 })
-
-// CHECK POINT - 4
