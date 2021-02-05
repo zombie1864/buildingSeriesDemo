@@ -106,7 +106,7 @@ class Main  { // this is the blueprint for the main obj, used to structure the o
         return this.mainResult
     }
 
-    _getMainResult(): string {
+    get MainResult(): string {
         return this.tableCssStyle()
     }
 }
