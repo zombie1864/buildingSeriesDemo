@@ -9,7 +9,7 @@ const server = http.createServer( (req: any, res: any) => {
         const main = new Main(data) // inst of class obj 
         res.write(
             `${main.tableCssStyle()}`
-            ) // ⮑ MAIN.RESULT 
+            ) // ⮑ RENAME FUNC
         res.end()
     } else {
         res.setHeader('Access-Control-Allow-Origin', '*') // this is to help avoid CORS issues 
@@ -24,4 +24,4 @@ server.listen(PORT, () => {
     console.log('listening on port 8000'); // this cb is an opt param 
 })
 
-// CHECK POINT - 2
+// CHECK POINT - 3
