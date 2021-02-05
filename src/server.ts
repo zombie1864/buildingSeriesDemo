@@ -8,7 +8,7 @@ const server = http.createServer( (req: any, res: any) => {
         res.writeHead(200, {'Content-Type': 'text/html'}) // HTTP status code 200, ok && html is the formate that is being sent back 
         const main = new Main(data) // inst of class obj 
         res.write(
-            `${main.html}` + `${main.mapCssStyle()}` + `${main.initMap()}` + `${main.mapContainer}` + `<div id="table">${main.tableComp()}</div>` + `${main.tableCssStyle()}`
+            `${main.tableCssStyle()}`
             ) // ⮑ MAIN.RESULT 
         res.end()
     } else {
@@ -24,4 +24,4 @@ server.listen(PORT, () => {
     console.log('listening on port 8000'); // this cb is an opt param 
 })
 
-// CHECK POINT
+// CHECK POINT - 2

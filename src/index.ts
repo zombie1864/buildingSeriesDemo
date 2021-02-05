@@ -1,4 +1,4 @@
-// CHECK POINT
+// CHECK POINT - 2
 class Main  { // this is the blueprint for the main obj, used to structure the obj 
     html: string 
     style: string 
@@ -11,8 +11,58 @@ class Main  { // this is the blueprint for the main obj, used to structure the o
         this.tableTag = `<table style="border: 1px solid black; border-collapse: collapse">`
         this.mapContainer = '<div style="float:left;overflow:hidden"id="map"></div>'
     }
+    private mainHeadTag = (): string => { 
+        let htmlHead: string = this.html
+        htmlHead += this.style
+        htmlHead += '\
+            #map {\
+                width: 50%;\
+                height: 800px;\
+            }\
+        </style>'
+        return htmlHead + '</head>'
+    }
 
-    tableComp = ():string => { // appends th to table tag 
+    private initMap = (): string => { // creates map 
+        let result:string = '', 
+            addMarker:string = 'function addMarker(props){\
+                let marker = new google.maps.Marker({\
+                    position: props.coords,\
+                    map: map\
+                });\
+                if (props.content) {\
+                    let infoWindow = new google.maps.InfoWindow({ content: props.content });\
+                    marker.addListener("mouseover", () => {\
+                        infoWindow.open(map, marker);\
+                    });\
+                    marker.addListener("mouseout", () => {\
+                        infoWindow.close();\
+                    });\
+                }\
+            }'
+        result += this.mainHeadTag() + '<body><script>'
+        result += `function initMap(){\
+            let options = {\
+                zoom: 10, \
+                center: { lat:40.71846, lng: -73.99391 }\
+            };\
+            let map = new google.maps.Map(document.getElementById("map"), options);\
+        `
+        result += addMarker 
+
+        const arrOfDataObj = this.data.results // ds is [{},...,{}]
+        arrOfDataObj.forEach( function(obj:any) { // graps each {}
+            if ( obj.latitude === null || obj.longitude === null ) return 
+            result += `addMarker({\
+                coords: { lat:${obj.latitude}, lng:${obj.longitude} },\
+                content: "<h1>${obj.building_name}-id:${obj.bdbid}</h1>"\
+            });`
+        })
+        result += '};</script></body>'
+        return result + this.mapContainer
+    } // end of func 
+
+    private tableComp = ():string => { // appends th to table tag 
         let result: string = this.tableTag; // gives the table tag 
         Object.keys(this.data.results[0]).forEach( colName => { // iterates thr [key1,...,key2]
             if (colName === "energy_breakdown" || colName === "co2eui_breakdown") return 
@@ -34,64 +84,11 @@ class Main  { // this is the blueprint for the main obj, used to structure the o
                 }
             })
         }) // end of iterates thr [{},...,{}]
-        return result + '</table>'
+        return this.initMap() + '<div id="table">' + result + '</table>' + '</div>'
     } // end of func
 
-    initMap = (): string => { // creates map 
-        let result:string = '<body><script>', 
-            addMarker:string = 'function addMarker(props){\
-                let marker = new google.maps.Marker({\
-                    position: props.coords,\
-                    map: map\
-                });\
-                if (props.content) {\
-                    let infoWindow = new google.maps.InfoWindow({ content: props.content });\
-                    marker.addListener("mouseover", () => {\
-                        infoWindow.open(map, marker);\
-                    });\
-                    marker.addListener("mouseout", () => {\
-                        infoWindow.close();\
-                    });\
-                }\
-            }'
-
-        result += `function initMap(){\
-            let options = {\
-                zoom: 10, \
-                center: { lat:40.71846, lng: -73.99391 }\
-            };\
-            let map = new google.maps.Map(document.getElementById("map"), options);\
-        `
-        result += addMarker 
-
-        const arrOfDataObj = this.data.results // ds is [{},...,{}]
-        arrOfDataObj.forEach( function(obj:any) { // graps each {}
-            if ( obj.latitude === null || obj.longitude === null ) return 
-            result += `addMarker({\
-                coords: { lat:${obj.latitude}, lng:${obj.longitude} },\
-                content: "<h1>${obj.building_name}-id:${obj.bdbid}</h1>"\
-            });`
-        })
-        result += '};</script></body>'
-        return result
-    } // end of func 
-
-/*****************************************************************************/
-// ----------------------------[ CSS ]----------------------------
-/*****************************************************************************/
-mapCssStyle = (): string => { 
-    let result:string = this.style
-    result += '\
-        #map {\
-            width: 50%;\
-            height: 800px;\
-        }\
-    </style>'
-    return result + '</head>'
-}
-
     tableCssStyle = ():string => {
-        return '\
+        return this.tableComp() + '\
         <style>\
             #table {\
                 float: left;\
