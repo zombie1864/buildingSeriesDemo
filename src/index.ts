@@ -1,30 +1,26 @@
-import data from './data/data.json' // export of JSON by configuring ts with "resolveJsonModule": true
-
-class Main { // this is the blueprint for the main obj, used to structure the obj 
+class Main  { // this is the blueprint for the main obj, used to structure the obj 
     html: string 
     style: string 
     tableTag: string
-    dataObj: any
     mapContainer: string
     
-    constructor() { // no params - reason: inst of main will simply produce a table 
+    constructor(private data: any) { // no params - reason: inst of main will simply produce a table 
         this.html = '<head><script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACIaoXM5khxJYc827L7Eq74OtnmPffMA0&callback=initMap"></script><title>@zxc</title>'
         this.style = '<style type="text/css">'
         this.tableTag = `<table style="border: 1px solid black; border-collapse: collapse">`
-        this.dataObj = data
         this.mapContainer = '<div style="float:left;overflow:hidden"id="map"></div>'
     }
 
     tableComp = ():string => { // appends th to table tag 
         let result: string = this.tableTag; // gives the table tag 
-        const arrOfColName:string[] = Object.keys(data.results[0]) // ds is [key1,...,key2]
-        const arrOfDataObj = data.results // is is [{},...,{}]
+        const arrOfColName:string[] = Object.keys(this.data.results[0]) // ds is [key1,...,key2]
+        const arrOfDataObj:any = this.data.results // is is [{},...,{}]
         arrOfColName.forEach( colName => { // iterates thr [key1,...,key2]
             if (colName === "energy_breakdown" || colName === "co2eui_breakdown") return 
             result += `<th style="border: 1px solid black; border-collapse: collapse">${colName}`.toString() // concats th to table tag 
         })
         result += '<tr></tr>'
-        arrOfDataObj.forEach( dataObj => { //iterates thr [{},...,{}]
+        arrOfDataObj.forEach( function(dataObj:any) { //iterates thr [{},...,{}]
             let dataObjValues = Object.values(dataObj) // ds is [val1,...,val2]
             dataObjValues.forEach( (value) => {
                 if ( 
@@ -70,8 +66,8 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
         '
         result += addMarker 
 
-        const arrOfDataObj = data.results // ds is [{},...,{}]
-        arrOfDataObj.forEach( obj => { // graps each {}
+        const arrOfDataObj = this.data.results // ds is [{},...,{}]
+        arrOfDataObj.forEach( function(obj:any) { // graps each {}
             let latVal = obj.latitude, // graps the values of lat 
                 lngVal = obj.longitude, // graps the values of lng 
                 bldName = obj.building_name, //graps the name of bld
