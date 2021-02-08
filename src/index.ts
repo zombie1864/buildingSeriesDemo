@@ -27,14 +27,17 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
     private tableTag: string
     private mapContainer: string
     private mainResult: string
+    private data: FixtureDataTypes
     
-    constructor(public data: FixtureDataTypes) { // public key word is needed
+    constructor( data: FixtureDataTypes) { // public key word is needed
         this.html = '<head><script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACIaoXM5khxJYc827L7Eq74OtnmPffMA0&callback=initMap"></script><title>@zxc</title>'
         this.style = '<style type="text/css">'
         this.tableTag = `<table style="border: 1px solid black; border-collapse: collapse">`
         this.mapContainer = '<div style="float:left;overflow:hidden"id="map"></div>'
         this.mainResult = ''
+        this.data = data 
     }
+    
     private mainHeadTag = (): string => { 
         let htmlHead: string = this.html
         htmlHead += this.style
@@ -132,7 +135,7 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
         return this.mainResult
     }
 
-    MainResult(): string {
+    public mainRes(): string {
         return this.tableCssStyle()
     }
 }
