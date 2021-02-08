@@ -1,14 +1,34 @@
-interface MainRequirements {
-    MainResult: string 
+interface FixtureDataTypes {
+    count: number, 
+    next: null, 
+    previous: null, 
+    results: IResults[]
 }
-class Main implements MainRequirements{ // this is the blueprint for the main obj, used to structure the obj 
+
+interface IResults {
+    bdbid: number,
+    building_name: string,
+    address: string,
+    year_built: string | null,
+    total_bldg_gross_sq_ft: number | null,
+    parent_record_id: null,
+    oper_agency_acronym: string,
+    epapm_primary_function: string,
+    outofservice: boolean,
+    latitude: number | null,
+    longitude: number | null,
+    energy_breakdown: object[],
+    co2eui_breakdown: object[]
+}
+
+class Main { // this is the blueprint for the main obj, used to structure the obj 
     private html: string 
     private style: string 
     private tableTag: string
     private mapContainer: string
     private mainResult: string
     
-    constructor(private data: any) { // no params - reason: inst of main will simply produce a table 
+    constructor(public data: FixtureDataTypes) { // public key word is needed
         this.html = '<head><script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACIaoXM5khxJYc827L7Eq74OtnmPffMA0&callback=initMap"></script><title>@zxc</title>'
         this.style = '<style type="text/css">'
         this.tableTag = `<table style="border: 1px solid black; border-collapse: collapse">`
@@ -112,7 +132,7 @@ class Main implements MainRequirements{ // this is the blueprint for the main ob
         return this.mainResult
     }
 
-    get MainResult(): string {
+    MainResult(): string {
         return this.tableCssStyle()
     }
 }
