@@ -27,9 +27,9 @@ class Main { // this is the blueprint for the main obj, used to structure the ob
     private tableTag: string
     private mapContainer: string
     private mainResult: string
-    private data: FixtureDataTypes
+    private data: FixtureDataTypes // data is made globally 
     
-    constructor( data: FixtureDataTypes) { // public key word is needed
+    public constructor( data: FixtureDataTypes ) { // constr func, data is local to constr func 
         this.html = '<head><script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACIaoXM5khxJYc827L7Eq74OtnmPffMA0&callback=initMap"></script><title>@zxc</title>'
         this.style = '<style type="text/css">'
         this.tableTag = `<table style="border: 1px solid black; border-collapse: collapse">`
